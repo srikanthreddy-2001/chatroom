@@ -1,53 +1,51 @@
-const tempData = location.search.split("=");
-const userName = tempData[1].split(
-  tempData[1].indexOf("+") != -1 ? "+" : "&"
-)[0];
-const password = tempData[2];
-
-if (password != "1234") {
-  alert("Wrong Password!!");
+const Data = location.search.split("=");
+const uName = Data[1].split(
+  Data[1].indexOf("+") != -1 ? "+" : "&")[0];
+const pswd = Data[2];
+if (pswd != "1234") {
+  alert("Wrong passward!!");
   location.assign(location.origin);
 } else {
   document.getElementById("mainContainer").style.visibility = "visible";
 }
 
-const sendButton = document.getElementById("sendButton");
-const socket = io();
+const sButton = document.getElementById("sendButton");
+const skt = io();
 
-socket.emit("join", userName);
+skt.emit("join to chat", uName);
 
-socket.on("message", (input) => {
-  var newMessageDiv = document.createElement("div");
-  newMessageDiv.className = "messageCard active " + input.userName;
+skt.on("message", (input) => {
+  var newMsgD = document.createElement("div");
+  newMsgD.className = "messageCard active " + input.uName;
 
-  var newUserName = document.createElement("p");
-  newUserName.className = "userName";
-  newUserName.innerText = input.userName;
+  var newperson = document.createElement("p");
+  newperson.className = "userName";
+  newperson.innerText = input.uName;
 
-  var newMessage = document.createElement("p");
-  newMessage.className = "message";
-  newMessage.innerText = input.messageSent;
+  var newMsg = document.createElement("p");
+  newMsg.className = "message";
+  newMsg.innerText = input.msgSEnt;
 
-  newMessageDiv.appendChild(newUserName);
-  newMessageDiv.appendChild(newMessage);
-  document.getElementById("messagesDiv").appendChild(newMessageDiv);
+  newMsgD.appendChild(newperson);
+  newMsgD.appendChild(newMsg);
+  document.getElementById("messagesDiv").appendChild(newMsgD);
 });
 
-socket.on("updateMesssagesDisconnect", (userName) => {
-  var messageCards = document.getElementsByClassName(userName);
-  for (var i = 0; i < messageCards.length; i++) {
-    messageCards[i].className = "messageCard inactive " + userName;
+skt.on("updateMessagesDisconnect", (uName) => {
+  var msgcards = document.getElementsByClassName(uName);
+  for (var i = 0; i < msgcards.length; i++) {
+    msgcards[i].className = "messageCard inactive " + uName;
   }
 });
 
-socket.on("updateMesssagesConnect", (userName) => {
-  var messageCards = document.getElementsByClassName(userName);
-  for (var i = 0; i < messageCards.length; i++) {
-    messageCards[i].className = "messageCard active " + userName;
+skt.on("updateMessagesConnect", (uName) => {
+  var msgcards = document.getElementsByClassName(uName);
+  for (var i = 0; i < msgcards.length; i++) {
+    msgcards[i].className = "messageCard active " + uName;
   }
 });
 
-sendButton.addEventListener("click", (e) => {
-  let messageSent = document.getElementById("messabeBox").value;
-  socket.emit("sentMessage", { messageSent, userName });
+sButton.addEventListener("click", (e) => {
+  let msgSEnt = document.getElementById("messageBox").value;
+  skt.emit("sentMessage", { msgSEnt, uName });
 });

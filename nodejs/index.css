@@ -16,7 +16,7 @@ body {
   }
   button {
     background-color: white;
-    font-weight: 600;
+    font-weight: 603;
     border: 2px solid black;
     padding: 5px;
     cursor: pointer;
@@ -24,21 +24,21 @@ body {
   form {
     margin: 0;
   }
-  .mainContainer {
+  .Contain {
     display: flex;
     justify-content: center;
     margin-top: 12%;
   }
-  .loginFormDiv {
+  .lgnFormDiv {
     align-self: center;
     width: 20%;
     height: 250px;
-    box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px rgb(11, 11, 11);
     border-radius: 10px;
     padding: 10px;
     padding-top: 30px;
   }
-  #loginForm {
+  #lgnForm {
     display: flex;
     justify-items: center;
     flex-direction: column;
